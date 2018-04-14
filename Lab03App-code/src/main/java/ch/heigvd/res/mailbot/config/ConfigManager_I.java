@@ -9,6 +9,4 @@ import ch.heigvd.res.mailbot.model.mail.Mail;
  */
 public interface ConfigManager_I {
     
-    public void sendMail(Mail mail);
-    
 }
