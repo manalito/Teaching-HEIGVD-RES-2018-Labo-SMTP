@@ -56,21 +56,26 @@ public class PrankGenerator {
 
         List<Group> groups = generateGroups(victims, numberOfGroups);
 
+        for(String msg : messages){
+            System.out.println("/" + msg + "/");
+        }
         int iMessage = 0;
         for(Group group : groups){
             Prank prank = new Prank();
 
             List<Person> members = group.getMembers();
             Collections.shuffle(members);
-            Person sender = victims.remove(0);
+            Person sender = members.remove(0);
             prank.setSenderVictim(sender);
-            prank.addVictimRecipients(victims);
+            prank.addVictimRecipients(members);
 
             prank.addWitnessRecipients(configManager.getWitnessToCC());
 
 
             String message = messages.get(iMessage);
+
             iMessage = (iMessage + 1) % messages.size();
+
             prank.setMessageBody(message);
             prank.setMessageSubject(message);
             pranks.add(prank);

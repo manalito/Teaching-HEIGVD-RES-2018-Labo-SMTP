@@ -19,7 +19,7 @@ class MailBot{
         SmtpClient client = new SmtpClient("localhost", 2525);
 
         Logger LOG = Logger.getLogger(client.getClass());
-        ArrayList<String> victims = new ArrayList<>();
+        /*ArrayList<String> victims = new ArrayList<>();
         victims.add("nathan.fluckiger@heig-vd.ch");
         victims.add("aurelsiu@hotmail.com");
 
@@ -30,40 +30,32 @@ class MailBot{
         List<Person> lp = new ArrayList<>();
 
         lp.add(new Person("nathan.fluckiger@heig-vd.ch"));
-        lp.add(new Person("aurelsiu@hotmail.com"));
+        lp.add(new Person("aurelsiu@hotmail.com"));*/
         try{
-            //client.sendMail(m1);
-            //client.sendMail(m2);
-
-            ConfigManager cm = new ConfigManager();
-
-            // TODO : test Prank and PrankGenerator Classes
-
-            // Tests not working...
-            PrankGenerator prankGenerator = new PrankGenerator(cm);
-            List<Prank> pranks = prankGenerator.generatePranks();
-            Mail mail;
-            Prank p = new Prank();
+            /*client.sendMail(m1);
+            client.sendMail(m2);
             p.setSenderVictim(new Person("nathan.fluckiger@heig-vd.ch"));
             p.setMessageSubject("Hello, here I am");
             p.setMessageBody("Hi, I am steven");
             p.addVictimRecipients(lp);
             Mail m = p.generateMail();
+            */
 
-            //System.out.println(m.getBody());
-            if(m ==null){
-                System.out.println("APFSIJFDSJD");
-            }
-            else{
-                //client.sendMail(m);
-            }
+            ConfigManager cm = new ConfigManager();
+
+            // TODO : read messages in ConfigManager and random in PrankGenerator Class
+
+            PrankGenerator prankGenerator = new PrankGenerator(cm);
+            List<Prank> pranks = prankGenerator.generatePranks();
+            Mail mail;
+            Prank p = new Prank();
 
             for(Prank prank : pranks){
                 mail = prank.generateMail();
-                LOG.info(mail.getBody());
+                // Test body presence LOG.info(mail.getBody());
                 client.sendMail(mail);
             }
-        } catch (Exception ex){
+        } catch (IOException ex){
             LOG.severe(ex.getMessage());
         }
 
