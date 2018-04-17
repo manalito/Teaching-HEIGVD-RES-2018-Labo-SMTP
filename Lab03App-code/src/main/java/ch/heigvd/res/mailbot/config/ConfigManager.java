@@ -18,14 +18,22 @@ import ch.heigvd.res.mailbot.model.mail.Person;
  */
 public class ConfigManager implements ConfigManager_I{
 
-    private Properties prop;
+
+    private String smtpServerAddress;
+    private int smtpServerPort;
+    private int numberOfGroup;
+    private String witnessestoCC;
 
     public ConfigManager(){
-        prop = new Properties();
+        Properties prop = new Properties();
 
         try {
             //load a properties file from class path, inside static method
             prop.load(ConfigManager.class.getResourceAsStream("config.properties"));
+            smtpServerAddress = prop.getProperty("smtpServerAddress");
+            smtpServerPort = Integer.valueOf( prop.getProperty("smtpServerPort"));
+            numberOfGroup = Integer.valueOf( prop.getProperty("numberOfGroup"));
+            witnessestoCC = prop.getProperty("witnessestoCC");
 
         }
         catch (IOException ex) {
@@ -33,20 +41,20 @@ public class ConfigManager implements ConfigManager_I{
         }
     }
 
-    public int getServerAddress(){
-        return Integer.valueOf( prop.getProperty("smtpServerAddress"));
+    public String getServerAddress(){
+        return smtpServerAddress;
     }
     public int getServerPort(){
-        return Integer.valueOf( prop.getProperty("smtpServerPort"));
+        return smtpServerPort;
     }
 
     public  int getNumberOfGroup(){
-        return Integer.valueOf( prop.getProperty("numberOfGroup"));
+        return numberOfGroup;
     }
 
     public List<Person> getWitnessToCC(){
         List<Person> returnvalues = new ArrayList<>();
-        String valueToParse = prop.getProperty("witnessestoCC");
+        String valueToParse = witnessestoCC;
         while(valueToParse.indexOf(",") > -1){
             returnvalues.add(parsePersonFromEmail(valueToParse.substring(0, valueToParse.indexOf(","))));
             valueToParse = valueToParse.substring(valueToParse.indexOf(",")+1);

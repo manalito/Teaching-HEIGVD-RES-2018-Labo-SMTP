@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public interface ConfigManager_I {
 
-    public int getServerAddress();
+    public String getServerAddress();
     public int getServerPort();
     public  int getNumberOfGroup();
 
