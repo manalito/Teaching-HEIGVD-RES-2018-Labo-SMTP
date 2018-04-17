@@ -32,16 +32,17 @@ class MailBot{
         lp.add(new Person("nathan.fluckiger@heig-vd.ch"));
         lp.add(new Person("aurelsiu@hotmail.com"));
         try{
-            client.sendMail(m1);
-            client.sendMail(m2);
+            //client.sendMail(m1);
+            //client.sendMail(m2);
 
+            ConfigManager cm = new ConfigManager();
 
             // TODO : test Prank and PrankGenerator Classes
 
             // Tests not working...
-            PrankGenerator prankGenerator = new PrankGenerator(new ConfigManager());
+            PrankGenerator prankGenerator = new PrankGenerator(cm);
             List<Prank> pranks = prankGenerator.generatePranks();
-            Mail mail = null;
+            Mail mail;
             Prank p = new Prank();
             p.setSenderVictim(new Person("nathan.fluckiger@heig-vd.ch"));
             p.setMessageSubject("Hello, here I am");
@@ -49,17 +50,21 @@ class MailBot{
             p.addVictimRecipients(lp);
             Mail m = p.generateMail();
 
-            System.out.println(m.getBody());
-            client.sendMail(m);
+            //System.out.println(m.getBody());
+            if(m ==null){
+                System.out.println("APFSIJFDSJD");
+            }
+            else{
+                //client.sendMail(m);
+            }
 
-            /*
             for(Prank prank : pranks){
                 mail = prank.generateMail();
-                //LOG.info(mail.getBody());
-                client.sendMail(prank.generateMail());
-            }*/
+                LOG.info(mail.getBody());
+                client.sendMail(mail);
+            }
         } catch (Exception ex){
-            //LOG.severe(ex.getMessage());
+            LOG.severe(ex.getMessage());
         }
 
 

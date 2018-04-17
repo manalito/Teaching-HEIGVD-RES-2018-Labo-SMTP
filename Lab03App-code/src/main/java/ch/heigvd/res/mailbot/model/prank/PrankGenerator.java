@@ -19,12 +19,12 @@ public class PrankGenerator {
 
     }
 
-    public List<Group> generateGroups(List<Person> victims, int nunberOfGroups) {
+    public List<Group> generateGroups(List<Person> victims, int numberOfGroups) {
         List<Person> availableVictims = new ArrayList(victims);
         Collections.shuffle(availableVictims);
         List<Group> groups = new ArrayList<>();
 
-        for (int i=0; i<nunberOfGroups; i++) {
+        for (int i=0; i< numberOfGroups; i++) {
             Group group = new Group();
             groups.add(group);
         }
@@ -51,7 +51,7 @@ public class PrankGenerator {
 
         if( numberOfVictims / numberOfGroups < 3){
             numberOfGroups = numberOfVictims / 3;
-            LOG.warning("Not enough victims for the number of group set. Group generated: " + numberOfGroups);
+            LOG.warning("Not enough victims for the number of group set. victims"+ numberOfVictims + "Group generated: " + numberOfGroups);
         }
 
         List<Group> groups = generateGroups(victims, numberOfGroups);
@@ -71,6 +71,8 @@ public class PrankGenerator {
 
             String message = messages.get(iMessage);
             iMessage = (iMessage + 1) % messages.size();
+            prank.setMessageBody(message);
+            prank.setMessageSubject(message);
             pranks.add(prank);
 
         }

@@ -28,12 +28,21 @@ public class ConfigManager implements ConfigManager_I{
         Properties prop = new Properties();
 
         try {
+            FileInputStream input = new FileInputStream("config.properties");
+
+            // load a properties file
+            prop.load(input);
             //load a properties file from class path, inside static method
-            prop.load(ConfigManager.class.getResourceAsStream("config.properties"));
-            smtpServerAddress = prop.getProperty("smtpServerAddress");
+            //prop.load(ConfigManager.class.getResourceAsStream("config.properties"));
+            System.out.println(prop.getProperty("smtpServerAddress"));
+            System.out.println(prop.getProperty("smtpServerPort"));
+            System.out.println(prop.getProperty("numberOfGroup"));
+            smtpServerAddress = new String(prop.getProperty("smtpServerAddress"));
+
             smtpServerPort = Integer.valueOf( prop.getProperty("smtpServerPort"));
             numberOfGroup = Integer.valueOf( prop.getProperty("numberOfGroup"));
             witnessestoCC = prop.getProperty("witnessestoCC");
+            System.out.println("bonjour:" + smtpServerAddress + smtpServerPort + numberOfGroup + witnessestoCC);
 
         }
         catch (IOException ex) {
@@ -97,7 +106,7 @@ public class ConfigManager implements ConfigManager_I{
         List<Person> returnValue = new ArrayList<>();
 
         try {
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(new FileInputStream("victimes.utf8"), "UTF-8"));
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(new FileInputStream("victims.utf8"), "UTF-8"));
 
             String line;
             while ((line = bReader.readLine()) != null){
