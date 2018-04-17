@@ -19,7 +19,7 @@ public interface ConfigManager_I {
     public int getServerPort();
     public  int getNumberOfGroup();
 
-    public List<String> getWitnessToCC();
+    public List<Person> getWitnessToCC();
 
     public List<String> getMessages();
 

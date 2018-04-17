@@ -44,14 +44,14 @@ public class ConfigManager implements ConfigManager_I{
         return Integer.valueOf( prop.getProperty("numberOfGroup"));
     }
 
-    public List<String> getWitnessToCC(){
-        List<String> returnvalues = new ArrayList<>();
+    public List<Person> getWitnessToCC(){
+        List<Person> returnvalues = new ArrayList<>();
         String valueToParse = prop.getProperty("witnessestoCC");
         while(valueToParse.indexOf(",") > -1){
-            returnvalues.add(valueToParse.substring(0, valueToParse.indexOf(",")));
+            returnvalues.add(parsePersonFromEmail(valueToParse.substring(0, valueToParse.indexOf(","))));
             valueToParse = valueToParse.substring(valueToParse.indexOf(",")+1);
         }
-        returnvalues.add(valueToParse);
+        returnvalues.add(parsePersonFromEmail(valueToParse));
 
 
         return returnvalues;
@@ -93,15 +93,18 @@ public class ConfigManager implements ConfigManager_I{
 
             String line;
             while ((line = bReader.readLine()) != null){
-               String firstname =  line.substring(0,line.indexOf("."));
-               String lastname = line.substring(line.indexOf(".")+1, line.indexOf("@"));
-
-               returnValue.add(new Person(firstname, lastname, line));
+               returnValue.add(parsePersonFromEmail(line));
             }
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
 
         return returnValue;
+    }
+
+    private Person parsePersonFromEmail(String email){
+        String firstname =  email.substring(0,email.indexOf("."));
+        String lastname = email.substring(email.indexOf(".")+1, email.indexOf("@"));
+        return new Person(firstname, lastname, email);
     }
 }
