@@ -8,7 +8,10 @@ package ch.heigvd.res.mailbot.config;
 import ch.heigvd.res.mailbot.model.mail.Mail;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.List;
+import ch.heigvd.res.mailbot.model.mail.Person;
 
 /**
  *
@@ -16,10 +19,10 @@ import java.util.Properties;
  */
 public class ConfigManager implements ConfigManager_I{
 
-
+    private Properties prop;
 
     public void setConfigFromFile(){
-        Properties prop = new Properties();
+        prop = new Properties();
 
         try {
             //load a properties file from class path, inside static method
@@ -37,5 +40,36 @@ public class ConfigManager implements ConfigManager_I{
         catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public int getServerAddress(){
+        return Integer.valueOf( prop.getProperty("smtpServerAddress"));
+    }
+    public int getServerPort(){
+        return Integer.valueOf( prop.getProperty("smtpServerPort"));
+    }
+
+    public  int getNumberOfGroup(){
+        return Integer.valueOf( prop.getProperty("numberOfGroup"));
+    }
+
+    public String getWitnessToCC(){
+        return prop.getProperty("witnessestoCC");
+    }
+
+    public List<String> getMessages(){
+           List<String> returnValue = new ArrayList<String>();
+
+
+
+           return returnValue;
+    }
+
+    public  List<Person> getVictims(){
+        List<Person> returnValue = new ArrayList<Person>();
+
+
+
+        return returnValue;
     }
 }
