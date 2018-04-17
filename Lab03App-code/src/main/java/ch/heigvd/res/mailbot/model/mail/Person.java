@@ -13,6 +13,10 @@ public class Person {
         this.emailAddress = emailAddress;
     }
 
+    public Person(String emailAddress){
+        this.emailAddress = emailAddress;
+    }
+
     public String getFirstName(){
         return firstName;
     }

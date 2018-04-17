@@ -5,6 +5,8 @@ import ch.heigvd.res.mailbot.model.mail.Mail;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -43,6 +45,10 @@ public class SmtpClient implements SmtpClient_I {
         line = bReader.readLine();
         LOG.info(line);
 
+        List<String> toAddresses = mail.getTo();
+        List<String> ccAddresses = mail.getCc();
+        List<String> bccAddresses = mail.getBcc();
+
 
         // throw an error if we receive other message from server than 250
         if(!line.startsWith("250")){
@@ -58,27 +64,33 @@ public class SmtpClient implements SmtpClient_I {
         line = bReader.readLine();
         LOG.info(line);
 
-        for(String to : mail.getTo()){
+        for(String to : toAddresses){
             pWriter.write("RCPT TO: " + to + endOfLine);
             pWriter.flush();
             line = bReader.readLine();
             LOG.info(line);
         }
-/*
-        for(String cc : mail.getCc()){
-            pWriter.write("RCPT TO: " + cc + endOfLine);
-            pWriter.flush();
-            line = bReader.readLine();
-            LOG.info(line);
+
+
+        if(ccAddresses != null) {
+            for (String cc : ccAddresses) {
+                pWriter.write("RCPT TO: " + cc + endOfLine);
+                pWriter.flush();
+                line = bReader.readLine();
+                LOG.info(line);
+            }
         }
 
-        for(String bc : mail.getBcc()) {
-            pWriter.write("RCPT TO: " + bc + endOfLine);
-            pWriter.flush();
-            line = bReader.readLine();
-            LOG.info(line);
+
+        if(bccAddresses != null) {
+            for (String bcc : bccAddresses) {
+                pWriter.write("RCPT TO: " + bcc + endOfLine);
+                pWriter.flush();
+                line = bReader.readLine();
+                LOG.info(line);
+            }
         }
-        */
+
 
         // Send Data
         pWriter.write("DATA" + endOfLine);
@@ -88,28 +100,27 @@ public class SmtpClient implements SmtpClient_I {
         LOG.info(line);
         pWriter.write("Content-Type: text/plain; charset=UTF-8" + endOfLine);
         pWriter.write("From: " + mail.getFrom() + endOfLine);
-        pWriter.write("To: " + mail.getTo().get(0));
-        for(int i = 1; i < mail.getTo().size(); ++i){
-            pWriter.write(", " + mail.getTo().get(i));
+        pWriter.write("To: " + toAddresses.get(0));
+        for(int i = 1; i < toAddresses.size(); ++i){
+            pWriter.write(", " + toAddresses.get(i));
         }
         pWriter.write(endOfLine);
 
         if(mail.getCc() != null){
-            pWriter.write("Cc: " + mail.getCc().get(0));
-            for(int i = 1; i < mail.getCc().size(); ++i){
-                pWriter.write(", " + mail.getCc().get(i));
+            pWriter.write("Cc: " + ccAddresses.get(0));
+            for(int i = 1; i < ccAddresses.size(); ++i){
+                pWriter.write(", " + ccAddresses.get(i));
             }
             pWriter.write(endOfLine);
         }
 
-        if(mail.getBcc() != null) {
-            pWriter.write("Bcc: " + mail.getBcc().get(0));
-            for (int i = 1; i < mail.getBcc().size(); ++i) {
-                pWriter.write(", " + mail.getBcc().get(i));
+        if(bccAddresses != null) {
+            pWriter.write("Bcc: " + bccAddresses.get(0));
+            for (int i = 1; i < bccAddresses.size(); ++i) {
+                pWriter.write(", " + bccAddresses.get(i));
             }
             pWriter.write(endOfLine);
         }
-
 
         pWriter.write("Subject: " + mail.getSubject());
         pWriter.write(endOfLine + endOfLine);
