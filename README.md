@@ -28,8 +28,6 @@ Your mission is to develop a client application that automatically plays pranks 
 
 ## Example
 
-Consider that your program generates a group G1. The group sender is Bob. The group recipients are Alice, Claire and Peter. When the prank is played on group G1, then your program should pick one of the fake messages. It should communicate with a SMTP server, so that Alice, Claire and Peter receive an e-mail, which appears to be sent by Bob.
-
 
 ## Deliverables
 
@@ -43,16 +41,31 @@ Your report MUST include the following sections:
 
 * **Instructions for setting up a mock SMTP server (with Docker)**. The user who wants to experiment with your tool but does not really want to send pranks immediately should be able to use a mock SMTP server. For people who are not familiar with this concept, explain it to them in simple terms. Explain which mock server you have used and how you have set it up.
 
-* **Clear and simple instructions for configuring your tool and running a prank campaign**. If you do a good job, an external user should be able to clone your repo, edit a couple of files and send a batch of e-mails in less than 10 minutes.
+
+## Docker setup
+* To be able to run the server, you have to build and run the docker  
+Here is the instruct to setup and run the server on a Linux operating system  
+At first be sure you are on the root directory of the project
+You will see the _Dockerfile_
+
+	Open a terminal and type the following commands:
+
+	This will build your docker image with the name **_"smtp-server"_**: 
+
+`sudo docker build -t smtp-server`   
+ 
+ This will run the docker containing the smtp server with **port 2525 used for the SMTP protocol **
+ and the **port 8282 for access to the web interface** of the MockMock server :
+ 
+`sudo docker run -p 8282:8282 -p 2525:2525 smtp-server`
+
+* **Clear and simple instructions for configuring your tool and running a prank campaign**. 
+If you do a good job, an external user should be able to clone your repo, edit a couple of files and send a batch of e-mails in less than 10 minutes.
 
 In addition, your report SHOULD include (i.e. you will not have penalties if you don't provide the info, but if you want to add this project to your portfolio, it is worth doing it):
 
 * **A concise description of your implementation**: document the key aspects of your code. It is probably a good idea to start with a class diagram. Decide which classes you want to show (focus on the important ones) and describe their responsibilities in text. It is also certainly a good idea to include examples of dialogues between your client and a SMTP server (maybe you also want to include some screenshots here).
 
-      
-## Evaluation
-
-* See CyberLearn. Beware of the dates.
 
 
 
