@@ -44,8 +44,17 @@ public class ConfigManager implements ConfigManager_I{
         return Integer.valueOf( prop.getProperty("numberOfGroup"));
     }
 
-    public String getWitnessToCC(){
-        return prop.getProperty("witnessestoCC");
+    public List<String> getWitnessToCC(){
+        List<String> returnvalues = new ArrayList<>();
+        String valueToParse = prop.getProperty("witnessestoCC");
+        while(valueToParse.indexOf(",") > -1){
+            returnvalues.add(valueToParse.substring(0, valueToParse.indexOf(",")));
+            valueToParse = valueToParse.substring(valueToParse.indexOf(",")+1);
+        }
+        returnvalues.add(valueToParse);
+
+
+        return returnvalues;
     }
 
     public List<String> getMessages(){
