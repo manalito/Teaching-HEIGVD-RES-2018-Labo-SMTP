@@ -14,7 +14,6 @@ import java.util.Properties;
  * @author manalito
  */
 public interface ConfigManager_I {
-    public void setConfigFromFile();
 
     public int getServerAddress();
     public int getServerPort();
