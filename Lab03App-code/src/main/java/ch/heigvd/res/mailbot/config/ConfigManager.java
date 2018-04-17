@@ -80,17 +80,20 @@ public class ConfigManager implements ConfigManager_I{
                 BufferedReader bReader = new BufferedReader(new InputStreamReader(new FileInputStream("messages.utf8"), "UTF-8"));
 
                 String line;
+                String str = "";
                 while ((line = bReader.readLine()) != null){
-                    String str = "";
+
                     if(line.contains("Subject:")){
-                        line.replace("Subject:","");
+                        line = line.replace("Subject:","");
                         returnValue.add(line);
                     }else {
                         if(!line.contains("**")){
-                            if(!line.equals("")) str += line + "\r" + "\n";
+                            if(!line.equals("")){
+                                str += line + "\r\n";
+                            }
                         }
                         else{
-                            returnValue.add(str);
+                            returnValue.add(new String(str));
                             str = "";
                         }
                     }
@@ -120,8 +123,10 @@ public class ConfigManager implements ConfigManager_I{
     }
 
     private Person parsePersonFromEmail(String email){
-        String firstname =  email.substring(0,email.indexOf("."));
-        String lastname = email.substring(email.indexOf(".")+1, email.indexOf("@"));
+        StringBuilder strBuild = new StringBuilder(email.substring(0,email.indexOf(".")));
+        String firstname = strBuild.replace(0, 1, strBuild.substring(0,1).toUpperCase()).toString();
+        strBuild = new StringBuilder(email.substring(email.indexOf(".")+1, email.indexOf("@")));
+        String lastname = strBuild.replace(0,1, strBuild.substring(0,1).toUpperCase()).toString();
         return new Person(firstname, lastname, email);
     }
 }

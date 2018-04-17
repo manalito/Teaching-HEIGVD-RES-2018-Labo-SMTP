@@ -7,6 +7,7 @@ import ch.heigvd.res.mailbot.model.mail.Person;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 public class PrankGenerator {
@@ -60,6 +61,7 @@ public class PrankGenerator {
             System.out.println("/" + msg + "/");
         }
         int iMessage = 0;
+        Random random = new Random();
         for(Group group : groups){
             Prank prank = new Prank();
 
@@ -71,13 +73,15 @@ public class PrankGenerator {
 
             prank.addWitnessRecipients(configManager.getWitnessToCC());
 
+            iMessage = random.nextInt(messages.size() / 2) * 2;
+            String subject = messages.get(iMessage);
+            String message = messages.get(iMessage + 1);
 
-            String message = messages.get(iMessage);
-
-            iMessage = (iMessage + 1) % messages.size();
+            message += "\r\n" + sender.getFirstName();
+            prank.setMessageSubject(subject);
 
             prank.setMessageBody(message);
-            prank.setMessageSubject(message);
+
             pranks.add(prank);
 
         }
