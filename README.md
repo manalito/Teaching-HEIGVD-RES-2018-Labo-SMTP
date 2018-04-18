@@ -4,7 +4,7 @@ Author: Olivier Liechti, Siu Aurélien, Flückiger Nathan
 
 ## Description of the Repository
 
-This repository has been created for an exercice in a university, the subject is to create a SMPT server, and to create a class to send random spam.
+This repository has been created for an exercice in a university, the subject is to create a SMTP server, and to create a class to send random spam.
 
 The random spam is created with the help of a bunch of class:
 
