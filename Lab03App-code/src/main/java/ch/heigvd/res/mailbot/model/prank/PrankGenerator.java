@@ -7,6 +7,7 @@ import ch.heigvd.res.mailbot.model.mail.Person;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 public class PrankGenerator {
@@ -19,12 +20,12 @@ public class PrankGenerator {
 
     }
 
-    public List<Group> generateGroups(List<Person> victims, int nunberOfGroups) {
+    public List<Group> generateGroups(List<Person> victims, int numberOfGroups) {
         List<Person> availableVictims = new ArrayList(victims);
         Collections.shuffle(availableVictims);
         List<Group> groups = new ArrayList<>();
 
-        for (int i=0; i<nunberOfGroups; i++) {
+        for (int i=0; i< numberOfGroups; i++) {
             Group group = new Group();
             groups.add(group);
         }
@@ -51,26 +52,36 @@ public class PrankGenerator {
 
         if( numberOfVictims / numberOfGroups < 3){
             numberOfGroups = numberOfVictims / 3;
-            LOG.warning("Not enough victims for the number of group set. Group generated: " + numberOfGroups);
+            LOG.warning("Not enough victims for the number of group set. victims"+ numberOfVictims + "Group generated: " + numberOfGroups);
         }
 
         List<Group> groups = generateGroups(victims, numberOfGroups);
 
+        for(String msg : messages){
+            System.out.println("/" + msg + "/");
+        }
         int iMessage = 0;
+        Random random = new Random();
         for(Group group : groups){
             Prank prank = new Prank();
 
             List<Person> members = group.getMembers();
             Collections.shuffle(members);
-            Person sender = victims.remove(0);
+            Person sender = members.remove(0);
             prank.setSenderVictim(sender);
-            prank.addVictimRecipients(victims);
+            prank.addVictimRecipients(members);
 
             prank.addWitnessRecipients(configManager.getWitnessToCC());
 
+            iMessage = random.nextInt(messages.size() / 2) * 2;
+            String subject = messages.get(iMessage);
+            String message = messages.get(iMessage + 1);
 
-            String message = messages.get(iMessage);
-            iMessage = (iMessage + 1) % messages.size();
+            message += "\r\n" + sender.getFirstName();
+            prank.setMessageSubject(subject);
+
+            prank.setMessageBody(message);
+
             pranks.add(prank);
 
         }

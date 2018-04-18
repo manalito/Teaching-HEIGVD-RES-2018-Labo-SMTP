@@ -20,9 +20,6 @@ The project is stocked on a docker container to help with the implementation of 
 
 To use the prank generator, you must change the data of three files:
 
-* **config.properties, in this file you must give the connection information, as the IP adress of the server, the port on the server, the number of group (at how many group of victims you want to send), and the witness to contact.
-*  * The witness can be more than one email, just write the data like this exemple, witness1firstname.witness1lastname@email.com,witness2firstname.witness2lastname@email.com,witnessNfirstname.witnessNlastname@email.com
-
 * **Messages.utf8, in this file, you must write all the diffrent messages that you will use in the prank, to use it properly, you have to create a message this way
 *  *Put a "Subject: My subject" in the mail, if you don't want a subject put it this way "Subject:"
 *  *Write the body of your message

@@ -58,23 +58,27 @@ public class Prank {
         ArrayList<String> ccAddresses = new ArrayList<>();
         Mail mail = new Mail();
 
+
         mail.setFrom(senderVictim.getEmailAddress());
         for(Person victim : recipientsVictims){
             toAddresses.add(victim.getEmailAddress());
+            System.out.println(victim.getEmailAddress());
         }
         mail.setTo(toAddresses);
 
-        for(Person witness : recipientsWitnesses){
-            ccAddresses.add(witness.getEmailAddress());
+
+        if(recipientsWitnesses.size() > 0) {
+            for (Person witness : recipientsWitnesses) {
+                ccAddresses.add(witness.getEmailAddress());
+                //System.out.println(witness.getEmailAddress());
+            }
+            mail.setCc(ccAddresses);
         }
-        mail.setCc(ccAddresses);
 
 
         mail.setSubject(messageSubject);
         mail.setBody(messageBody);
-
-        //mail = new Mail(senderVictim.getEmailAddress(),toAddresses ,messageSubject,messageBody);
-
+        
         return mail;
     }
 }
