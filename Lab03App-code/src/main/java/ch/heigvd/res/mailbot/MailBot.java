@@ -16,15 +16,18 @@ class MailBot{
 
 
     public static void main(String [] args) {
-        SmtpClient client = new SmtpClient("localhost", 2525);
 
+
+        ConfigManager cm = new ConfigManager();
+        SmtpClient client = new SmtpClient(cm.getServerAddress(), cm.getServerPort());
         Logger LOG = Logger.getLogger(client.getClass());
+
 
         try{
 
-            ConfigManager cm = new ConfigManager();
 
             PrankGenerator prankGenerator = new PrankGenerator(cm);
+
             List<Prank> pranks = prankGenerator.generatePranks();
             Mail mail;
 
