@@ -57,9 +57,6 @@ public class PrankGenerator {
 
         List<Group> groups = generateGroups(victims, numberOfGroups);
 
-        for(String msg : messages){
-            System.out.println("/" + msg + "/");
-        }
         int iMessage = 0;
         Random random = new Random();
         for(Group group : groups){

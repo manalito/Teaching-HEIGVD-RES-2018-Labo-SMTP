@@ -44,12 +44,12 @@ You will see the _Dockerfile_
 
   This will build your docker image with the name _"smtp-server"_: 
 
-	`sudo docker build -t smtp-server `
+	`sudo docker build -t mock-smtp-server . `
 	
 	This will run the docker containing the smtp server with port 2525 used for the SMTP protocol 
  and the port 8282 for access to the web interface of the MockMock server :
  
-	`sudo docker run -p 8282:8282 -p 2525:2525 smtp-server`
+	`sudo docker run -p 8282:8282 -p 2525:2525 mock-smtp-server`
 
 ## Run the Prank Campaign
 

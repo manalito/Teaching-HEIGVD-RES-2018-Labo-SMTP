@@ -62,7 +62,6 @@ public class Prank {
         mail.setFrom(senderVictim.getEmailAddress());
         for(Person victim : recipientsVictims){
             toAddresses.add(victim.getEmailAddress());
-            System.out.println(victim.getEmailAddress());
         }
         mail.setTo(toAddresses);
 

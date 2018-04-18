@@ -32,17 +32,11 @@ public class ConfigManager implements ConfigManager_I{
 
             // load a properties file
             prop.load(input);
-            //load a properties file from class path, inside static method
-            //prop.load(ConfigManager.class.getResourceAsStream("config.properties"));
-            System.out.println(prop.getProperty("smtpServerAddress"));
-            System.out.println(prop.getProperty("smtpServerPort"));
-            System.out.println(prop.getProperty("numberOfGroup"));
             smtpServerAddress = new String(prop.getProperty("smtpServerAddress"));
 
             smtpServerPort = Integer.valueOf( prop.getProperty("smtpServerPort"));
             numberOfGroup = Integer.valueOf( prop.getProperty("numberOfGroup"));
             witnessestoCC = prop.getProperty("witnessestoCC");
-            System.out.println("bonjour:" + smtpServerAddress + smtpServerPort + numberOfGroup + witnessestoCC);
 
         }
         catch (IOException ex) {
